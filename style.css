@@ -12,4 +12,7 @@ img{
 	display: block;
 	margin:0 auto;
 }
-
+.img-desc{
+	display: table;
+	margin: 0 auto;
+}
