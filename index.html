@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Уроки по OpenGL</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div id="content">
+			<div class="main-text">
+
+<h2>Установка GLUT под Borland C++ Builder 6</h2>
+
+<p>Из архива файлы следует положить в следующем порядке: <b>glut32.dll</b> в <b>WindowsRoot\system32</b>, <b>glut.h</b> в <b>$(BCB)\include\gl</b> и <b>glut32.lib</b> в <b>$(BCB)\lib</b>.
+В опциях проекта (<b>Project-Options-Directories/Conditionals</b>), использующего <b>GLUT</b>, в <b>Library path</b> должна быть указана папка <b>$(BCB)\lib</b> и <b>$(BCB)\lib\Psdk</b>(в некоторых случаях), а в <b>Include path</b> – папка <b>$(BCB)\include</b>. В поле <b>Conditional defines</b> добавить <b>;GLUT_BUILDING_LIB</b><br>
+Если появляются ошибки, попробуйте добавить #pragma comment (lib, "glut32.lib").</p>
+<p class="warn">Внимание: при каждом новом проекте повторять изменение его свойств</p>
+
+
+<h2>Урок 01 - Создание окна</h2>
+
+<p>Необходимые знания - геометрия пространства, базовые понятия графических примитивов - точка, ребро, пиксель, плоскость, полигон или фейс и т.д. и т.п. OpenGl является основным 3D набором инструментов разработчика, который пишет продвинутые графические приложения для работы с 3D графикой, разрабатывает игры под MacOS или Линукс ( напомню, что под Windows есть свой API - DirectX, тоже богатый на возможности, но поддержка OpenGl в ней также реализована).<br>
+В этом разделе мы собираемся создать функцию main нашей программы. Функция main будет состоять из необходимой инициализации и цикл обработки событий.
+Первый блок функции main будет инициализировать процедуры GLUT и создаст окно.
+После GLUT входит в цикл обработки событий, получив контроль над приложением. GLUT будет ждать каждое следующее событие, проверяя, есть ли функция для его обработки.
+Поэтому, прежде чем GLUT вступит в цикл обработки событий мы должны инициализировать те функции GLUT, которые мы хотим вызвать для обработки вызываемых событий.
+Каждый раз для вызова функции GLUT, её (функцию) - нужно зарегистрировать.</p>
+<p>
+	Создаём консольное приложение с помощью File-New-Other-Console Wizard<br>
+	<img src="images/lesson01/bcb_new_items.png"><br>
+	<span class="img-desc">File->New->Other</span>
+	<img src="images/lesson01/bcb_console_wiz.png"><br>
+	<span class="img-desc">Настройка консольного приложения</span>
+	<img src="images/lesson01/bcb_project_options.png"><br>
+	<span class="img-desc">Настройки проекта</span>
+</p>
+<b>Скелет функции main.</b>
+<p><code>
+int main(int argc, char **argv) <br>
+{<br>
+<br> 
+	// инициализация GLUT and создание окна<br>
+ <br>
+	// регистрация вызовов функций GLUT<br>
+ <br>
+	// цикл обработки событий<br>
+ <br>
+}
+</code></p>
+
+<h2>Инициализация GLUT и создание окна</h2>
+<p>Все функции инициализации в glut начинаются с glutInit. Первое, что вы должны сделать, это вызвать функцию glutInit.</p>
+<p><code>void glutInit(int *argc, char **argv);</code></p>
+
+<p><b>Параметры:</b><br>
+* int argc - количество аргументов<br>
+* char** argv - их описание в виде указателя на строку</p>
+
+После инициализации GLUT, мы собираемся инициализировать окно приложения. Сначала установим положение окна, вернее его верхний левый угол. Для этого мы используем функцию glutInitWindowPosition.
+
+<p><code>void glutInitWindowPosition(int x, int y);</code></p>
+
+<p>Параметры:<br>
+х - число пикселей от левой части экрана.<br>
+у - количество пикселей от верхней части экрана.<br></p>
+
+<p>Далее мы выбираем размер окна. Для этого мы используем функцию glutInitWindowSize.</p>
+
+<code>void glutInitWindowSize(int width, int height);</code>
+
+<p>Параметры:<br><br>
+width - ширина окна;<br>
+height - высота окна;<br></p>
+
+<p>Затем вы должны определить режим отображения с помощью функции glutInitDisplayMode.</p>
+
+<code>void glutInitDisplayMode(unsigned int mode);</code>
+
+<p>Параметры:<br>
+<b>mode</b> - определяет режим отображения;<br>
+Вы можете использовать режим , чтобы определить цвет, а также количество и тип буферов.<br>
+Предопределенные константы для определения цвета модели являются:<br>
+<b>GLUT_RGBA</b> или <b>GLUT_RGB</b> - выбирает окно RGBA.<br>
+<b>GLUT_INDEX</b> - выбирает режим индексированного цвета.<br>
+Режим отображения также позволяет выбрать одно-или двухместные окна буфера. Предопределенные константы для этого являются:<br>
+<b>GLUT_SINGLE</b> - режим одинарной буферизации.<br>
+<b>GLUT_DOUBLE</b> - режим двойной буферизации, - РЕЖИМ, ПОДХОДЯЩИЙ ДЛЯ АНИМАЦИИ.<br>
+Также существуют специализированные режимы буфера:<br>
+<b>GLUT_ACCUM</b> - буфер накопления.<br>
+<b>GLUT_STENCIL</b> - буфер трафарета.<br>
+<b>GLUT_DEPTH</b> -буфер глубины.<br>
+Итак, предположим, вы хотите создать окно в цветовом пространстве RGB , с двойной буферизацией, с использованием буфера глубины. Все, что вам нужно сделать, это прописать соответствующие константы для того, чтобы создать необходимый режим.</p>
+
+<code>glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);</code>
+
+<p>После этих шагов, окно может быть создано с помощью glutCreateWindow.<br><br>
+
+<code>int glutCreateWindow(char *title);</code><br>
+Параметры:<br>
+title - имя создаваемого окна;<br>
+Итоговый код:<br>
+
+<code>#include <gl/glut.h> //подключаем заголовочный файл glut.h<br>
+#pragma comment (lib, "glut32.lib")<br>
+int main(int argc, char **argv) {<br>
+<br>
+	// Инициализация GLUT<br>
+	glutInit(&argc, argv);<br>
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);<br>
+	glutInitWindowPosition(100,100);<br>
+	glutInitWindowSize(400,400);<br>
+	glutCreateWindow("Урок 1");<br>
+	return 1;<br>
+}</code>
+</p>
+
+<h2>Функции рисования и регистрации обратных вызовов</h2>
+<p>Если вы запустите этот код свыше, вы получите пустое черное окно консоли, без окна OpenGL. Есть две вещи, которые нужно сделать прежде всего. Во-первых, указать GLUT, какие функции отвечают за визуализацию. Давайте создадим пример функции для рисования. Функции представлены ниже очищают буфер цвета и рисуют треугольник.
+<br><code>void renderScene(void) {<br>
+ <br>
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<br>
+ <br>
+	glBegin(GL_TRIANGLES);<br>
+		glVertex3f(-0.5,-0.5,0.0);<br>
+		glVertex3f(0.0,0.5,0.0);<br>
+		glVertex3f(0.5,-0.5,0.0);<br>
+	glEnd();<br>
+ <br>
+}<br></code>
+
+Название этой функции задаётся программистом. Однако теперь вы должны сказать GLUT что он должен использовать функции, которую мы только что написали для рисования. Это называется регистрации обратного вызова. GLUT будет вызывать функцию всякий раз, когда вы выберете её для рендеринга( отрисовнки ).
+Так что давайте говорить GLUT, что функция renderScene должны использоваться всякий раз, когда окно требуется окрасить. GLUT имеет функцию, которая принимает в качестве параметра имя функции для использования при необходимости перерисовки.</p>
+
+<p><code>void glutDisplayFunc(void (*funcName)(void));</code><br>			
+			Пропись главного цикла программы. Бесконечный цикл, отрабатывающий все функции событий, зарегестрированные программистом.<br>
+		
+			<code>void glutMainLoop(void);//главный цикл</code><br>
+			
+			Итоговый текст программы выглядит вот так:<br><br>
+			
+<code>			#include <gl/glut.h><br>
+			#pragma comment (lib, "glut32.lib") <br>
+			void renderScene(void) {<br>
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);<br>
+			 <br>
+				glBegin(GL_TRIANGLES);<br>
+					glVertex3f(-0.5,-0.5,0.0);<br>
+					glVertex3f(0.0,0.5,0.0);<br>
+					glVertex3f(0.5,-0.5,0.0);<br>
+				glEnd();<br>
+			 <br>
+			}<br>
+			 <br>
+			int main(int argc, char **argv) {<br>
+			 <br>
+				// инициализация<br>
+				glutInit(&argc, argv);<br>
+				glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);<br>
+				glutInitWindowPosition(100,100);<br>
+				glutInitWindowSize(400,400);<br>
+				glutCreateWindow("Урок 1");<br>
+			 <br>
+				// регистрация обратных вызовов<br>
+				glutDisplayFunc(renderScene);<br>
+			 <br>
+				// Основной цикл GLUT<br>
+				glutMainLoop();<br>
+			 <br>
+				return 1;<br>
+			}<br></code>
+			</p>			</div>
+		</div>
+	</body>
+</html>
