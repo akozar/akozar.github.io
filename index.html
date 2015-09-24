@@ -10,7 +10,7 @@
 			<div class="main-text">
 
 <h2>Установка GLUT под Borland C++ Builder 6</h2>
-
+<a href="glut for borland.rar">Скачать библиотеку GLUT</a><br>
 <p>Из архива файлы следует положить в следующем порядке: <b>glut32.dll</b> в <b>WindowsRoot\system32</b>, <b>glut.h</b> в <b>$(BCB)\include\gl</b> и <b>glut32.lib</b> в <b>$(BCB)\lib</b>.
 В опциях проекта (<b>Project-Options-Directories/Conditionals</b>), использующего <b>GLUT</b>, в <b>Library path</b> должна быть указана папка <b>$(BCB)\lib</b> и <b>$(BCB)\lib\Psdk</b>(в некоторых случаях), а в <b>Include path</b> – папка <b>$(BCB)\include</b>. В поле <b>Conditional defines</b> добавить <b>;GLUT_BUILDING_LIB</b><br>
 Если появляются ошибки, попробуйте добавить #pragma comment (lib, "glut32.lib").</p>
