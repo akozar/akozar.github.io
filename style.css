@@ -1,12 +1,151 @@
 body{
-	margin:0;
-	padding:0;
+	margin:0px;
+	padding:0px;
+}
+#side-bar{
+	padding: 0px;
+	position: fixed;
+	height: 100%;
+	top:0px;
+	width:115px;
+	border-right:10px;
+	/* can be treated like a fallback */
+	background-color: #1b222a;
+
+	/* will be "on top", if browser supports it */
+	background-image: linear-gradient(#1b222a, #262f3b, #1f2731);
+
+	/* these will reset other properties, like background-position, but it does know what you mean */
+	background: #1b222a;
+	background: linear-gradient(#1b222a, #262f3b, #1f2731);
+}
+#side-bar span{
+	cursor: pointer;
+	text-align: center;
+	font-family: sans-serif;
+	font-size: 12px;
+	margin: 0px;
+	padding: 0px;
+	display: block;
+	color: #f5f6f7;
+	background-color: #405063;
+	padding: 8px 3px 8px 3px;
+	-webkit-animation: lessonShow 1s; /* Safari 4+ */
+  	-moz-animation:    lessonShow 1s; /* Fx 5+ */
+  	-o-animation:      lessonShow 1s; /* Opera 12+ */
+ 	animation:         lessonShow 1s; /* IE 10+, Fx 29+ */		
+}
+#side-bar span:hover{
+	background-color: #6a7c91;
+	-webkit-animation: lessonFade 1s; /* Safari 4+ */
+  	-moz-animation:    lessonFade 1s; /* Fx 5+ */
+  	-o-animation:      lessonFade 1s; /* Opera 12+ */
+ 	animation:         lessonFade 1s; /* IE 10+, Fx 29+ */	
+}
+@-webkit-keyframes lessonShow {
+  0%   { background-color: #6a7c91; }
+  100% { background-color: #405063; }
+}
+@-moz-keyframes lessonShow {
+  0%   { background-color: #6a7c91; }
+  100% { background-color: #405063; }
+}
+@-o-keyframes lessonShow {
+  0%   { background-color: #6a7c91; }
+  100% { background-color: #405063; }
+}
+@keyframess lessonShow {
+  0%   { background-color: #6a7c91; }
+  100% { background-color: #405063; }
 }
 
+@-webkit-keyframes lessonFade {
+  0%   { background-color: #405063; }
+  100% { background-color: #6a7c91; }
+}
+@-moz-keyframes lessonFade {
+  0%   { background-color: #405063; }
+  100% { background-color: #6a7c91; }
+}
+@-o-keyframes lessonFade {
+  0%   { background-color: #405063; }
+  100% { background-color: #6a7c91; }
+}
+@keyframes lessonFade {
+  0%   { background-color: #405063; }
+  100% { background-color: #6a7c91; }
+}
+.hide {
+	margin-left: -115px;
+	-webkit-animation: hideSidebar 2s; /* Safari 4+ */
+  	-moz-animation:    hideSidebar 2s; /* Fx 5+ */
+  	-o-animation:      hideSidebar 2s; /* Opera 12+ */
+ 	animation:         hideSidebar 2s; /* IE 10+, Fx 29+ */		
+}
+
+.show {
+	margin-left: 0px;
+	-webkit-animation: showSidebar 2s; /* Safari 4+ */
+  	-moz-animation:    showSidebar 2s; /* Fx 5+ */
+  	-o-animation:      showSidebar 2s; /* Opera 12+ */
+ 	animation:         showSidebar 2s; /* IE 10+, Fx 29+ */			
+}
+
+@-webkit-keyframes showSidebar {
+  0%   { margin-left: -115px; }
+  100% { margin-left: 0px; }
+}
+@-moz-keyframes showSidebar {
+  0%   { margin-left: -115px; }
+  100% { margin-left: 0px; }
+}
+@-o-keyframes showSidebar {
+  0%   { margin-left: -115px; }
+  100% { margin-left: 0px; }
+}
+@keyframes showSidebar {
+  0%   { margin-left: -115px; }
+  100% { margin-left: 0px; }
+}
+@-webkit-keyframes hideSidebar {
+  0%   { margin-left: 0px; }
+  100% { margin-left: -115px; }
+}
+@-moz-keyframes hideSidebar {
+  0%   { margin-left: 0px; }
+  100% { margin-left: -115px; }
+}
+@-o-keyframes hideSidebar {
+  0%   { margin-left: 0px; }
+  100% { margin-left: -115px; }
+}
+@keyframes hideSidebar {
+  0%   { margin-left: 0px; }
+  100% { margin-left: -115px; }
+}
+#toggler{
+	cursor: pointer;
+	font-family: sans-serif;
+	z-index: 99;
+	line-height: 50px;
+	position: absolute;	
+	height: 50px;
+	width: 12px;
+	background-color: #c2185b;
+	margin: auto;
+	top:0;
+	color:white;
+	bottom: 0;
+	left:100%;
+	-webkit-border-radius: 0 12px 12px 0 ;
+}
 #content{
 	display: block;
 	margin: 0 auto;
 	width: 60%;
+}
+#content p{
+	text-align: justify;
 }
 img{
 	display: block;
