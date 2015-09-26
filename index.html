@@ -106,7 +106,7 @@ height - высота окна;<br></p>
 title - имя создаваемого окна;<br>
 Итоговый код:<br>
 
-<pre><code class="cpp">#include <gl/glut.h> //подключаем заголовочный файл glut.h
+<pre><code class="cpp">#include &lt;gl/glut.h&gt; //подключаем заголовочный файл glut.h
 #pragma comment (lib, "glut32.lib")
 int main(int argc, char **argv) {
 	// Инициализация GLUT
@@ -141,9 +141,9 @@ int main(int argc, char **argv) {
 		
 			<pre><code class="cpp">void glutMainLoop(void);//главный цикл</code></pre>
 			
-			Итоговый текст программы выглядит вот так:<br><br>
+			Итоговый текст программы выглядит вот так:<br>
 			
-<pre><code class="cpp">			#include <gl/glut.h>
+<pre><code class="cpp">			#include &lt;gl/glut.h&gt;
 			#pragma comment (lib, "glut32.lib") 
 			void renderScene(void) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
