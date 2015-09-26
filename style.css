@@ -1,20 +1,6 @@
 body{
 	margin:0px;
 	padding:0px;
-	min-width: 870px;
-	background: url(images/knitting250px.png);
-}
-h2 {
-	text-align: center;
-	font-family: sans-serif;
-}
-.noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 #side-bar{
 	padding: 0px;
@@ -23,11 +9,6 @@ h2 {
 	top:0px;
 	width:115px;
 	border-right:10px;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-	filter: alpha(opacity=80);
-	-moz-opacity: 0.8;
-	-khtml-opacity: 0.8;
-	opacity: 0.8;
 	/* can be treated like a fallback */
 	background-color: #1b222a;
 
@@ -144,13 +125,12 @@ h2 {
 }
 #toggler{
 	cursor: pointer;
-	padding-left: 2px;
 	font-family: sans-serif;
 	z-index: 99;
 	line-height: 50px;
 	position: absolute;	
 	height: 50px;
-	width: 15px;
+	width: 12px;
 	background-color: #c2185b;
 	margin: auto;
 	top:0;
@@ -162,8 +142,7 @@ h2 {
 #content{
 	display: block;
 	margin: 0 auto;
-	width: 66%;
-	min-width: 600px;
+	width: 60%;
 }
 #content p{
 	text-align: justify;
@@ -175,22 +154,4 @@ img{
 .img-desc{
 	display: table;
 	margin: 0 auto;
-	font-style: italic;
-}
-.warn{
-	background-color: white;
-	padding: 10px;
-	font-size: 16px;
-	font-family: sans-serif;
-	font-weight: bold;
-	border: 2px solid green;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px; /* future proofing */
-	-khtml-border-radius: 10px; /* for old Konqueror browsers */
-}
-.warn i{
-	font-size: 30px;
-	padding:0 10px 3px 10px;
-	color:#c2185b;
 }

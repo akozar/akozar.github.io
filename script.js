@@ -58,12 +58,10 @@ window.onload = function(){
 		if (!hide){
 			removeClass(sidebar,'show');
 			addClass(sidebar,'hide');
-			toggler.innerHTML ='<i class="fa fa-chevron-right"></i>';
 			hide = true;
 		} else {
 			removeClass(sidebar,'hide');
 			addClass(sidebar,'show');
-			toggler.innerHTML ='<i class="fa fa-chevron-left"></i>';
 			hide=false;
 		}
 	})
