@@ -1,0 +1,89 @@
+*
+  margin: 0
+  padding: 0
+
+html, body
+  height: 100%
+
+body
+  background: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/dark_embroidery.png)
+  position: relative
+
+.noteapp
+  background-color: white
+  opacity: 1
+  height: 600px
+  width: 400px
+  position: absolute
+  left: 50%
+  margin-left: -200px
+  top: 50%
+  margin-top: -300px
+  border-radius: 26px
+  border: 13px solid #D7AB07
+  overflow: hidden
+
+.note-title
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace
+  font-weight: bold
+
+.arrow
+  color: #7A6000
+  cursor: pointer
+  font-size: 24px
+  &:hover
+    color: #D76107
+
+.indicator
+  line-height: 28px
+
+.notelist
+  padding: 0 40px
+  margin-top: 20px
+  height: 404px
+  overflow: hidden
+
+.note
+  cursor: pointer
+  height: 98px
+  font-size: 14px
+  border: 1px solid #FF9B4F
+  margin-bottom: 2px
+  border-radius: 10px
+  overflow: hidden
+  p
+    height: 60px
+    overflow: hidden
+  &:hover
+    background-color: #FFF08F
+  .glyphicon
+    font-size: 30px
+    line-height: 98px
+    &:hover
+      color: red
+
+.btn-bottom
+  width: 90%
+  left: 5%
+  bottom: 2%
+  position: absolute
+  display: block
+
+.noresize
+  resize: none
+
+.hidden
+  display: none
+
+#noteText
+  width: 92%
+  margin-left: 4%
+  margin-top: 20px
+
+.noselect
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none

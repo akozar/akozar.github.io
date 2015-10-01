@@ -1,0 +1,24 @@
+<html>
+<head>
+  <title>Vanilla JS Note App</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/3.0.2/normalize.css">    
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>  
+  <div class="noteapp">
+    <h2 class="text-center note-title text-uppercase">Cписок заметок</h2>
+    <div class="row text-center">
+      <div class="col-xs-4 text-right"><span id="prevPage" class="glyphicon glyphicon-chevron-left arrow" aria-hidden="true"></span></div>
+      <div class="col-xs-4 indicator"><strong>0/0</strong></div>
+      <div class="col-xs-4 text-left"><span id="nextPage" class="glyphicon glyphicon-chevron-right arrow" aria-hidden="true"></span></div>
+    </div>
+    <textarea class="form-control noresize hidden" rows="19" id="noteText"></textarea>
+    <div class="row notelist">    
+    </div>
+    <a href="#" class="btn btn-primary btn-bottom" role="button" id="addBtn">Добавить заметку</a>
+  </div>
+</body>
+</html>
