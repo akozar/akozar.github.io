@@ -11,7 +11,7 @@
 <body>  
   <div class="noteapp">
     <h2 class="text-center note-title text-uppercase">Cписок заметок</h2>
-    <div class="row text-center">
+    <div class="row text-center" id="statusPanel">
       <div class="col-xs-4 text-right"><span id="prevPage" class="glyphicon glyphicon-chevron-left arrow" aria-hidden="true"></span></div>
       <div class="col-xs-4 indicator"><strong>0/0</strong></div>
       <div class="col-xs-4 text-left"><span id="nextPage" class="glyphicon glyphicon-chevron-right arrow" aria-hidden="true"></span></div>
@@ -19,6 +19,7 @@
     <textarea class="form-control noresize hidden" rows="19" id="noteText"></textarea>
     <div class="row notelist">    
     </div>
+    <a href="#" class="btn btn-danger btn-bottom hidden" role="button" id="backBtn">Вернуться</a>
     <a href="#" class="btn btn-primary btn-bottom" role="button" id="addBtn">Добавить заметку</a>
   </div>
 </body>

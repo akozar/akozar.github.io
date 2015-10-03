@@ -1,163 +1,168 @@
+var NOTES_PER_PAGE = 4;
+var currentPage, maxPage, editMode;
+var notes = JSON.parse(localStorage.getItem('notes'));
 
-      window.onload = function (){
-  function bind(domNode, event, handler) {
-    var handlerWrapper = function(event) {
-      event = event || window.event;
-      if (!event.target && event.srcElement) {
-        event.target = event.srcElement;
-      }
-      return handler.call(domNode, event);
-    };
-    if (domNode.addEventListener) {
-      domNode.addEventListener(event, handlerWrapper, false);
-    } else if (domNode.attachEvent) {
-      domNode.attachEvent('on' + event, handlerWrapper);
-    }
-    return handlerWrapper;
-  } 
-  function createEmptyNoteList () {
-    var noteObj = {
-      noteArr : [],
-      noteNum : 0,
-      currentPage: 0
-    };   
-    return noteObj;
+function initNoteApp() {
+  if (!notes) {
+    notes = createEmptyNoteArr();
+    currentPage = 0;
+  } else if (notes.length <= NOTES_PER_PAGE) {
+    currentPage = 0;
+  } else {
+    currentPage = JSON.parse(localStorage.getItem('noteapp_page'));
   }
-  function showPage(pageNum){
-    if (noteObj.noteNum > 0){
-      var maxPage = Math.ceil(noteObj.noteNum/4)-1; 
-      if (maxPage < pageNum){
-        pageNum = maxPage;
-        noteObj.currentPage = pageNum;
-      } 
-      console.log(noteObj);
-      document.querySelector('.notelist').innerHTML='';
-      var count = noteObj.noteNum - (pageNum)*4;    
-      if (count<=0) { count = 4 - count };
-      if (count >3) { count = 4};
-      indicator.innerHTML = (noteObj.currentPage*4+count) +'/'+noteObj.noteNum;      
-      for (var t = 0; t <= count-1; t++){
-        var index = pageNum*4+t;
-        document.querySelector('.notelist').innerHTML += '<div class="row note noselect"><div class="col-xs-10 text-justify"><p>'+noteObj.noteArr[index][0] +'</p><p><em>'+noteObj.noteArr[index][1] +'</em></p></div><div class="col-xs-2"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></div>';
-      };
-      var notes = document.querySelectorAll('.note');
-      // обработчики событий динамических элементов
-      Array.prototype.slice.call(notes).forEach(function (el,ind){        
-        bind(el,'mouseover',function(){            
-          indicator.innerHTML = noteObj.currentPage*4+1+ind +'/'+noteObj.noteNum;
-        });
-        bind(el,'mouseleave',function(){         
-          if (noteObj.noteNum>0) {
-            indicator.innerHTML = (noteObj.currentPage*4+count) +'/'+noteObj.noteNum;    
-          } else {
-            indicator.innerHTML = "0/0";
-          }
-          console.log('mouseover left');
-        });
-        bind(el.querySelector('.glyphicon-remove'),'click',function () { 
-          deleteNote(ind); 
-        });
-      });
-    } else {
-      noteList.innerHTML = "<h2 class='text-center'>Заметок к показу нет.</h2>";      
-      indicator.innerHTML = "0/0";
-      console.log('clear fired');
-    }
-  }
-  function saveNote(noteString){
-    var date = new Date();
-    noteObj.noteArr.push([noteString,formatDate(date)]);
-    noteObj.noteNum++;   
-    localStorage.setItem('noteapp',JSON.stringify(noteObj));
-  };
-  function deleteNote(ind){
-    // удаление заметок
-    console.log('note num ', ind,' deleting');
-    console.log('current note object: ',noteObj);
-    noteObj.noteArr.splice(noteObj.currentPage*4+ind,1);
-    noteObj.noteNum--;
-    
-    console.log('edited note object: ',noteObj);
-/** if ((noteObj.currentPage+1)>maxPage && noteObj.currentPage!==0){
-      noteObj.currentPage--;            
-    };**/
-    localStorage.setItem('noteapp',JSON.stringify(noteObj));
-    showPage(noteObj.currentPage);    
-  }
-  function formatDate(date){
-    return ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) +'-'+ date.getFullYear()+' '+('0' + date.getHours()).slice(-2)+':'+('0' + date.getMinutes()).slice(-2)+':'+('0' + date.getSeconds()).slice(-2);
-  }
-  function initNoteApp(){
-    if (!noteObj){    
-      noteObj = createEmptyNoteList();
-      localStorage.setItem('noteapp',JSON.stringify(noteObj));
-      noteList.innerHTML = "<h2 class='text-center'>Заметок к показу нет.</h2>";
-      indicator.innerHTML = "0/0";
-    } else {
-      noteObj = JSON.parse(noteObj);
-      if (noteObj.noteNum === 0){
-        noteList.innerHTML = "<h2 class='text-center'>Заметок к показу нет.</h2>";
-        indicator.innerHTML = "0/0";
-      }    
-      showPage(noteObj.currentPage);
-    }  
-  }  
-  
-  var noteObj = localStorage.getItem('noteapp');  
-  var editNoteMode = false;
-  var addBtn = document.querySelector('#addBtn');
-  var textArea = document.querySelector("#noteText");
-  var indicator = document.querySelector('.indicator strong');  
-  var prevPage = document.querySelector('#prevPage');
-  var nextPage = document.querySelector('#nextPage');
-  var noteList = document.querySelector('.notelist');
-  
-  initNoteApp();
-  bind(addBtn,'click',function(){    
-    var notes = document.querySelector('.notelist');
-    var textarea = document.querySelector('#noteText');
-    console.log('edit Mode', editNoteMode);
-    if (editNoteMode === false){
-      notes.classList.add('hidden');
-      textarea.classList.remove('hidden'); 
-      indicator.innerHTML = (noteObj.noteNum+1) + '/'+noteObj.noteNum;
-      this.classList.add('disabled');
-      editNoteMode = true;
-    } else {
-      saveNote(textArea.value);
-      textarea.value = '';
-      notes.classList.remove('hidden');
-      textarea.classList.add('hidden');      
-      indicator.innerHTML = (noteObj.currentPage*4+1) + '/'+noteObj.noteNum;
-      this.classList.remove('disabled');
-      showPage(noteObj.currentPage);
-      editNoteMode = false;
-    }
-  });
-  bind(textArea,'input', function(){
-    if (this.value.length===0){
-      addBtn.classList.add('disabled');
-    } else {
-      addBtn.classList.remove('disabled');
-    }
-  });
-  bind(prevPage,'click',function(){
-    if (noteObj.currentPage!==0 && !editNoteMode){
-      noteObj.currentPage--;
-      showPage(noteObj.currentPage);
-    } else if (editNoteMode){
-      // редактирование заметок
-    }
-  });
-  bind(nextPage,'click',function(){    
-    var maxPage = Math.floor(noteObj.noteNum/4);
-
-    if (noteObj.noteNum>4 && noteObj.currentPage!==maxPage && !editNoteMode){
-      noteObj.currentPage++;
-      showPage(noteObj.currentPage);
-    } else if (editNoteMode){
-      // редактирование заметок
-    }
-  });  
-  
+  editMode = false;
+  showPage(currentPage);
 }
+
+function createEmptyNoteArr() {
+  var notes = []
+  return notes;
+}
+
+function formatDate(fulldate) {
+  function getTwoDigitsNumber(num) {
+    return ('0' + num).slice(-2);
+  };
+  fulldate = new Date(fulldate);
+  var date = getTwoDigitsNumber(fulldate.getDate());
+  month = getTwoDigitsNumber(fulldate.getMonth() + 1);
+  year = getTwoDigitsNumber(fulldate.getFullYear());
+  hours = getTwoDigitsNumber(fulldate.getHours());
+  minutes = getTwoDigitsNumber(fulldate.getMinutes());
+  seconds = getTwoDigitsNumber(fulldate.getSeconds());
+  return date + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+}
+
+function saveNote(noteText) {
+  var date = new Date();
+  notes.push({
+    noteText: noteText,
+    createDate: date
+  });
+};
+
+function deleteNote(indexOnPage) {
+  if (confirm('Вы точно хотите удалить заметку?')) {
+    notes.splice(currentPage * NOTES_PER_PAGE + indexOnPage, 1);
+  }
+  showPage(currentPage);
+}
+
+// Pages are counted from 0
+function showPage(pageNum) {
+    noteList.innerHTML = '';
+    if (notes.length === 0) {
+      noteList.innerHTML = "<h2 class='text-center'>Заметок к показу нет.</h2>";
+      statusPanel.classList.add('hidden');
+      return;
+    }
+    maxPage = Math.ceil(notes.length / NOTES_PER_PAGE) - 1;
+    if (pageNum > maxPage) {
+      pageNum = maxPage;
+    } else if (pageNum < 0) {
+      pageNum = 0;
+    }
+    statusPanel.classList.remove('hidden');
+    for (var i = pageNum * NOTES_PER_PAGE; i < (pageNum + 1) * NOTES_PER_PAGE; i++) {
+      if (notes[i]) {
+        document.querySelector('.notelist').innerHTML += '<div class="row note noselect"><div class="col-xs-10 text-justify"><p>' + notes[i].noteText + '</p><p><em>' + formatDate(notes[i].createDate) + '</em></p></div><div class="col-xs-2"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></div>';
+      } else {
+        break;
+      }
+    }
+    var noteNodes = document.querySelectorAll('.note');
+    [].forEach.call(noteNodes, function(el, ind) {
+      el.querySelector('.glyphicon-remove').addEventListener('click', function() {
+        deleteNote(ind);
+      }, false);
+    })
+    indicator.innerHTML = (pageNum + 1) + ' из ' + (maxPage + 1) + ' стр.';
+    currentPage = pageNum;
+  }
+  // Saving NoteApp variables to localStorage
+function saveNoteApp() {
+  localStorage.setItem('notes', JSON.stringify(notes));
+  localStorage.setItem('noteapp_page', JSON.stringify(currentPage));
+}
+
+function addBtnHandler() {
+  if (editMode) {
+    saveNote(textArea.value);
+    setEditMode(false);
+    showPage(currentPage);
+  } else {
+    setEditMode(true);
+  }
+}
+
+function backBtnHandler() {
+  setEditMode(false);
+  showPage(currentPage);
+}
+
+// This function sets editMode and makes appropriate design
+function setEditMode(mode) {
+  if (mode === false) {
+    textArea.value = '';
+    noteList.classList.remove('hidden');
+    textArea.classList.add('hidden');
+    backBtn.classList.add('hidden');
+    addBtn.innerHTML = 'Добавить заметку';
+    addBtn.classList.remove('disabled');
+    addBtn.classList.remove('btn-success');
+    addBtn.classList.add('btn-primary');
+    editMode = false;
+  } else {
+    noteList.classList.add('hidden');
+    textArea.classList.remove('hidden');
+    textArea.focus();
+    backBtn.classList.remove('hidden');
+    addBtn.classList.add('disabled');
+    addBtn.classList.remove('btn-primary');
+    addBtn.classList.add('btn-success');
+    addBtn.innerHTML = '<span class="glyphicon glyphicon-send" aria-hidden="true"></span> Добавить заметку';
+    statusPanel.classList.add('hidden');
+    editMode = true;
+  }
+}
+
+function textareaHandler() {
+  if (textArea.value.length === 0) {
+    addBtn.classList.add('disabled');
+  } else {
+    addBtn.classList.remove('disabled');
+  }
+}
+
+function prevPageHandler() {
+  if (currentPage !== 0) {
+    currentPage--;
+    showPage(currentPage);
+  }
+}
+
+function nextPageHandler() {
+  if (notes.length > NOTES_PER_PAGE && currentPage !== maxPage) {
+    currentPage++;
+    showPage(currentPage);
+  }
+}
+
+var addBtn = document.querySelector('#addBtn');
+var backBtn = document.querySelector('#backBtn');
+var noteList = document.querySelector('.notelist');
+var textArea = document.querySelector('#noteText');
+var indicator = document.querySelector('.indicator strong');
+var prevPage = document.querySelector('#prevPage');
+var nextPage = document.querySelector('#nextPage');
+var statusPanel = document.querySelector('#statusPanel');
+
+window.addEventListener('unload', saveNoteApp, false);
+addBtn.addEventListener('click', addBtnHandler, false);
+backBtn.addEventListener('click', backBtnHandler, false);
+textArea.addEventListener('input', textareaHandler, false);
+prevPage.addEventListener('click', prevPageHandler, false);
+nextPage.addEventListener('click', nextPageHandler, false);
+
+initNoteApp();
