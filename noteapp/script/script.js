@@ -1,3 +1,4 @@
+window.onload = function() {
 var NOTES_PER_PAGE = 4;
 var currentPage, maxPage, editMode;
 var notes = JSON.parse(localStorage.getItem('notes'));
@@ -166,3 +167,4 @@ prevPage.addEventListener('click', prevPageHandler, false);
 nextPage.addEventListener('click', nextPageHandler, false);
 
 initNoteApp();
+}
