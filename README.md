@@ -1,5 +1,5 @@
 # akozar.github.io
-Here will be my online projects.
+My small sample projects will are located here. 
 
 List:
 #1: OpenGL Lessons [RUS]
